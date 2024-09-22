@@ -1,10 +1,20 @@
 document.addEventListener("DOMContentLoaded", function() {
+    var mode = 'HOME'; // Initialize mode to 'HOME'
+
     // Handle links to #contact
     var contactLinks = document.querySelectorAll('a[href="index.html#contact"]');
     contactLinks.forEach(function(link) {
         link.addEventListener('click', function(event) {
             event.preventDefault(); // Prevent default anchor behavior
-            smoothSwitch('POINTS');
+            if (mode !== 'CONTACT') {
+                if (mode === 'ABOUT') {
+                    smoothAdjustHeightAndDistance(0.25); // 40 - 10
+                } else if (mode === 'HOME') {
+                    smoothAdjustHeightAndDistance(0.75);
+                }
+                mode = 'CONTACT';
+                smoothSwitch('POINTS');
+            }
         });
     });
 
@@ -13,30 +23,78 @@ document.addEventListener("DOMContentLoaded", function() {
     homeLinks.forEach(function(link) {
         link.addEventListener('click', function(event) {
             event.preventDefault(); // Prevent default anchor behavior
-            smoothSwitch('LINE_STRIP');
+            if (mode !== 'HOME') {
+                if (mode === 'ABOUT') {
+                    smoothAdjustHeightAndDistance(-0.5);
+                } else if (mode === 'CONTACT') {
+                    smoothAdjustHeightAndDistance(-0.75);
+                }
+                mode = 'HOME';
+                smoothSwitch('LINE_STRIP');
+            }
+        });
+    });
+
+    // Handle links to #about
+    var aboutLinks = document.querySelectorAll('a[href="index.html#about"]');
+    aboutLinks.forEach(function(link) {
+        link.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default anchor behavior
+            if (mode !== 'ABOUT') {
+                if (mode === 'CONTACT') {
+                    smoothAdjustHeightAndDistance(-0.25); // 40 - 10
+                } else if (mode === 'HOME') {
+                    smoothAdjustHeightAndDistance(0.5);
+                }
+                mode = 'ABOUT';
+                smoothSwitch('ABOUT');
+            }
         });
     });
 });
 
-function smoothSwitch(mode) {
-    var canvas = document.getElementById('waves_canvas'); // Ensure this ID matches your canvas element
-    if (!canvas) {
-        console.error('Canvas element not found');
-        return;
+function smoothAdjustHeightAndDistance(value) {
+    const duration = 2000; // Duration of the transition in milliseconds
+    const startHeight = waves.uniforms.field[1];
+    const startDistance = waves.buffers.position[2]; // Assuming z-coordinate is at index 2
+    const endHeight = startHeight + value;
+    const endDistance = startDistance + value;
+    const startTime = performance.now();
+
+    function easeInOutQuint(t) {
+        return t < 0.5 ? 16 * t * t * t * t * t : 1 - Math.pow(-2 * t + 2, 5) / 2;
     }
 
-    // Fade out the canvas
-    canvas.style.transition = 'opacity 0.2s';
-    canvas.style.opacity = 0;
+    function animate(time) {
+        const elapsed = time - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const easedProgress = easeInOutQuint(progress);
 
-    // Wait for the transition to complete
-    setTimeout(function() {
-        // Switch the drawing mode
-        waves.setDrawingMode(mode);
+        const currentHeight = startHeight + (endHeight - startHeight) * easedProgress;
+        const currentDistance = startDistance + (endDistance - startDistance) * easedProgress;
 
-        // Fade in the canvas
-        canvas.style.opacity = 1;
-    }, 200); // Match the duration of the fade-out transition
+        waves.uniforms.field[1] = currentHeight;
+        waves.buffers.position = waves.buffers.position.map((val, index) => {
+            if (index % 3 === 1) { // Modify y-coordinate
+                return val + (currentHeight - startHeight);
+            }
+            if (index % 3 === 2) { // Modify z-coordinate
+                return val + (currentDistance - startDistance);
+            }
+            return val;
+        });
+
+        if (progress < 1) {
+            requestAnimationFrame(animate);
+        }
+    }
+
+    requestAnimationFrame(animate);
+}
+
+function smoothSwitch(mode) {
+    // Switch the drawing mode
+    waves.setDrawingMode(mode);
 }
 
 function switchToPoints() {
@@ -72,6 +130,7 @@ function switchToLineStrip() {
     // Assuming you have a ShaderProgram instance named `waves`
     waves.setDrawingMode('LINE_STRIP');
 }
+
 class ShaderProgram {
   constructor(holder, options = {}) {
     options = Object.assign({
