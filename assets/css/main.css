@@ -493,7 +493,10 @@ h6 {
 .edrea_tm_button a {
     display: inline-block;
     border-radius: 50px;
-    background-color: var(--pink-color);
+    border-style: solid;
+    border-width: 2px;
+    border-color: var(--pink-color);
+    background-color: rgba(255, 255, 255, 0);
     padding-left: 40px;
     padding-right: 40px;
     padding-top: 10px;
@@ -751,7 +754,7 @@ h6 {
     bottom: 0;
     left: 0;
     border-radius: 10px;
-    background-size: cover;
+    background-size: 150%;
     background-position: center;
     background-repeat: no-repeat
 }
