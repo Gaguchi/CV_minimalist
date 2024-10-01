@@ -1,23 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     var mode = 'HOME'; // Initialize mode to 'HOME'
 
-    // Handle links to #contact
-    var contactLinks = document.querySelectorAll('a[href="index.html#contact"]');
-    contactLinks.forEach(function(link) {
-        link.addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent default anchor behavior
-            if (mode !== 'CONTACT') {
-                if (mode === 'ABOUT') {
-                    smoothAdjustHeightAndDistance(0.25); // 40 - 10
-                } else if (mode === 'HOME') {
-                    smoothAdjustHeightAndDistance(0.75);
-                }
-                mode = 'CONTACT';
-                smoothSwitch('POINTS');
-            }
-        });
-    });
-
     // Handle links to #home
     var homeLinks = document.querySelectorAll('a[href="index.html#home"]');
     homeLinks.forEach(function(link) {
@@ -25,9 +8,11 @@ document.addEventListener("DOMContentLoaded", function() {
             event.preventDefault(); // Prevent default anchor behavior
             if (mode !== 'HOME') {
                 if (mode === 'ABOUT') {
-                    smoothAdjustHeightAndDistance(-0.5);
+                    smoothAdjustHeightAndDistance(-0.125);
+                } else if (mode === 'PORTFOLIO') {
+                    smoothAdjustHeightAndDistance(-0.25);
                 } else if (mode === 'CONTACT') {
-                    smoothAdjustHeightAndDistance(-0.75);
+                    smoothAdjustHeightAndDistance(-0.5); // Adjust as needed
                 }
                 mode = 'HOME';
                 smoothSwitch('LINE_STRIP');
@@ -41,13 +26,53 @@ document.addEventListener("DOMContentLoaded", function() {
         link.addEventListener('click', function(event) {
             event.preventDefault(); // Prevent default anchor behavior
             if (mode !== 'ABOUT') {
-                if (mode === 'CONTACT') {
-                    smoothAdjustHeightAndDistance(-0.25); // 40 - 10
-                } else if (mode === 'HOME') {
-                    smoothAdjustHeightAndDistance(0.5);
+                if (mode === 'HOME') {
+                    smoothAdjustHeightAndDistance(0.125); // 40 - 10
+                } else if (mode === 'PORTFOLIO') {
+                    smoothAdjustHeightAndDistance(-0.125);
+                } else if (mode === 'CONTACT') {
+                    smoothAdjustHeightAndDistance(-0.375); // Adjust as needed
                 }
                 mode = 'ABOUT';
-                smoothSwitch('ABOUT');
+                smoothSwitch('POINTS');
+            }
+        });
+    });
+
+    // Handle links to #PORTFOLIO
+    var PORTFOLIOLinks = document.querySelectorAll('a[href="index.html#portfolio"]');
+    PORTFOLIOLinks.forEach(function(link) {
+        link.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default anchor behavior
+            if (mode !== 'PORTFOLIO') {
+                if (mode === 'HOME') {
+                    smoothAdjustHeightAndDistance(0.25); // Adjust as needed
+                } else if (mode === 'ABOUT') {
+                    smoothAdjustHeightAndDistance(0.125); // Adjust as needed
+                } else if (mode === 'CONTACT') {
+                    smoothAdjustHeightAndDistance(-0.25); // Adjust as needed
+                }
+                mode = 'PORTFOLIO';
+                smoothSwitch('LINE_STRIP');
+            }
+        });
+    });
+
+    // Handle links to #contact
+    var contactLinks = document.querySelectorAll('a[href="index.html#contact"]');
+    contactLinks.forEach(function(link) {
+        link.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default anchor behavior
+            if (mode !== 'CONTACT') {
+                if (mode === 'HOME') {
+                    smoothAdjustHeightAndDistance(0.5); // 40 - 10
+                } else if (mode === 'ABOUT') {
+                    smoothAdjustHeightAndDistance(0.25);
+                } else if (mode === 'PORTFOLIO') {
+                    smoothAdjustHeightAndDistance(0.125); // Adjust as needed
+                }
+                mode = 'CONTACT';
+                smoothSwitch('POINTS');
             }
         });
     });

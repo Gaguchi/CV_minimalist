@@ -638,3 +638,21 @@
     .edrea_tm_modalbox .description_wrap::before {
     background-color: rgba(255, 255, 255, 0);
 }
+
+.text_logo{
+    display: inline;
+    vertical-align: middle;
+    max-height: 20px;
+}
+
+.outline_white{
+    color: white;
+    -webkit-text-fill-color: #ffffff00;
+    -webkit-text-stroke: 0.5px white;
+}
+
+.outline_pink{
+    color: white;
+    -webkit-text-fill-color: var(--pink-color);
+    -webkit-text-stroke: 0px var(--pink-color);
+}

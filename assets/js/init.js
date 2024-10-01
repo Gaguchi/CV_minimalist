@@ -195,30 +195,30 @@ function edrea_tm_about_popup() {
 }
 
 function edrea_tm_portfolio_popup() {
-	"use strict";
-	var modalBox = jQuery('.edrea_tm_modalbox');
-	var button = jQuery('.edrea_tm_portfolio .portfolio_popup');
-	var closePopup = modalBox.find('.close');
-	button.off().on('click', function () {
-		var element = jQuery(this);
-		var parent = element.closest('.list_inner');
-		var content = parent.find('.edrea_tm_hidden_content').html();
-		var image = parent.find('.image .main').data('img-url');
-		var title = parent.find('.details h3').text();
-		var category = parent.find('.details span').text();
-		modalBox.addClass('opened');
-		modalBox.find('.description_wrap').html(content);
-		modalBox.find('.portfolio_popup_details').prepend('<div class="top_image"><img src="assets/img/thumbs/4-2.jpg" alt="" /><div class="main" data-img-url="' + image + '"></div></div>');
-		modalBox.find('.portfolio_popup_details .top_image').after('<div class="portfolio_main_title"><h3>' + title + '</h3><span><a href="#">' + category + '</a></span><div>');
-		edrea_tm_data_images();
-		edrea_tm_popup();
-		return false;
-	});
-	closePopup.on('click', function () {
-		modalBox.removeClass('opened');
-		modalBox.find('.description_wrap').html('');
-		return false;
-	});
+    "use strict";
+    var modalBox = jQuery('.edrea_tm_modalbox');
+    var button = jQuery('.edrea_tm_portfolio .portfolio_popup');
+    var closePopup = modalBox.find('.close');
+    button.off().on('click', function () {
+        var element = jQuery(this);
+        var parent = element.closest('.list_inner');
+        var content = parent.find('.edrea_tm_hidden_content').html();
+        var image = parent.find('.image .main').data('img-url');
+        var title = parent.find('.details h3').text();
+        var category = parent.find('.details span').html();
+        modalBox.addClass('opened');
+        modalBox.find('.description_wrap').html(content);
+        modalBox.find('.portfolio_popup_details').prepend('<div class="top_image gallery_zoom"><a class="zoom" href="' + image + '"><img src="assets/img/thumbs/4-2.jpg" alt="" /><div class="main" data-img-url="' + image + '"></div></a></div>');
+        modalBox.find('.portfolio_popup_details .top_image').after('<div class="portfolio_main_title"><h3>' + title + '</h3><span><a href="#">' + category + '</a></span><div>');
+        edrea_tm_data_images();
+        edrea_tm_popup(); // Initialize the popup functionality
+        return false;
+    });
+    closePopup.on('click', function () {
+        modalBox.removeClass('opened');
+        modalBox.find('.description_wrap').html('');
+        return false;
+    });
 }
 
 function edrea_tm_news_popup() {
