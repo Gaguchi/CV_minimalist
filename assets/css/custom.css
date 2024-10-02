@@ -652,7 +652,67 @@
 }
 
 .outline_pink{
-    color: white;
+    color: var(--pink-color);
     -webkit-text-fill-color: var(--pink-color);
     -webkit-text-stroke: 0px var(--pink-color);
+}
+
+
+.submit_button {
+    display: inline-block;
+    border-radius: 50px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: var(--pink-color);
+    background-color: rgba(255, 255, 255, 0);
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-family: Poppins, sans-serif;
+    color: var(--white-color);
+    transition-property: all;
+    transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+    transition-duration: 300ms;
+}
+
+.submit_button:hover {
+    background-color: var(--white-color);
+    --tw-text-opacity: 1;
+    color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+
+
+.returnmessage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+    font-size: 1.5em;
+    display: none; /* Initially hidden */
+    z-index: 1000;
+    border-radius: 0; /* Remove border-radius to cover the entire form */
+    flex-direction: column; /* Ensure the close button and message are stacked vertically */
+}
+
+.returnmessage .close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 2em;
+    color: white;
+    cursor: pointer;
+}
+
+.site_logo{
+    width: 50px;
 }

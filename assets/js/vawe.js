@@ -1,4 +1,6 @@
+
 document.addEventListener("DOMContentLoaded", function() {
+  
     var mode = 'HOME'; // Initialize mode to 'HOME'
 
     // Handle links to #home
@@ -15,7 +17,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     smoothAdjustHeightAndDistance(-0.5); // Adjust as needed
                 }
                 mode = 'HOME';
-                smoothSwitch('LINE_STRIP');
+                isMobileDevice() ? smoothSwitch('POINTS'): smoothSwitch('LINE_STRIP');
+                smoothSwitch(mode);
             }
         });
     });
@@ -53,7 +56,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     smoothAdjustHeightAndDistance(-0.25); // Adjust as needed
                 }
                 mode = 'PORTFOLIO';
-                smoothSwitch('LINE_STRIP');
+                isMobileDevice() ? smoothSwitch('POINTS'): smoothSwitch('LINE_STRIP');
+                smoothSwitch(mode);
             }
         });
     });
@@ -264,7 +268,7 @@ class ShaderProgram {
     this.canvas = canvas
     this.camera = camera
     this.holder = holder
-    this.drawingMode = 'LINE_STRIP';
+    this.drawingMode = isMobileDevice() ? 'POINTS' : 'LINE_STRIP';
     this.onUpdate = options.onUpdate
     this.onResize = options.onResize
     this.data = {}
@@ -590,6 +594,10 @@ const waves = new ShaderProgram(document.querySelector('.waves'), {
     this.uniforms.size = (h / 400) * pointSize * dpi
   },
 })
+
+function isMobileDevice() {
+  return /Mobi|Android/i.test(navigator.userAgent);
+}
 
 
 // window.setDrawingMode = waves.setDrawingMode.bind(waves);
