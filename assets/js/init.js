@@ -19,7 +19,7 @@ jQuery(document).ready(function () {
 	edrea_tm_color_switcher();
 	edrea_tm_cursor_switcher();
 	edrea_tm_switcher_opener();
-	jQuery(window).load('body', function () {
+	jQuery(window).on('load', function () {
 		edrea_tm_my_load();
 	});
 });
@@ -106,15 +106,12 @@ function edrea_tm_page_transition() {
 		var element = jQuery(this);
 		var href = element.attr('href');
 		var fragment = href.split('#')[1]; // Extract the fragment part
-		console.log('Clicked href:', href);
-		console.log('Fragment:', fragment);
 		if (element.parent().hasClass('edrea_tm_button')) {
 			jQuery('.menu .transition_link a[href="' + href + '"]').trigger('click');
 			hashtag();
 			return false;
 		}
 		var sectionID = jQuery('#' + fragment); // Use the fragment to find the section
-		console.log('Section ID:', sectionID);
 		var parent = element.closest('li');
 		if (!parent.hasClass('active')) {
 			allLi.removeClass('active');
@@ -126,7 +123,6 @@ function edrea_tm_page_transition() {
 			wrapper.addClass('opened');
 			jQuery(section).addClass('hidden'); // Hide all sections
 			jQuery(sectionID).removeClass('hidden').addClass('animated ' + enter); // Show the target section
-			console.log('Activated section:', sectionID);
 			// Change drawing mode based on active section
 			// if (fragment === 'about') {
 			// 	window.setDrawingMode('POINTS');
@@ -145,7 +141,6 @@ function edrea_tm_page_transition() {
 			var fragment = href.split('#')[1]; // Extract the fragment part
 			var sectionID = jQuery('#' + fragment); // Use the fragment to find the section
 			jQuery(sectionID).removeClass('hidden').addClass('animated ' + enter);
-			console.log('Initial active section:', sectionID);
 		}
 	});
 }
